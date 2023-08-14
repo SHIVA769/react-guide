@@ -1,0 +1,123 @@
+////////////////////////////////// ------------REACT NOTES---------------/////////////////////////////////////////
+ REACT is  javascript  libaray  for building user interface .it maintained by facebook and it play with virtual dom
+ it only used in fronted not backend it use API. REACT has componment based archieture application
+  1 Type of componment
+   .functional
+   .. class
+
+ /////////////////////////////////////// componment///////////////////////////////////
+  1. class OR Statefull componment are same  because class componment vich he state use kar sakda ha
+  when to use them :=functional componment used modifiy the pages bur class componment are use only 
+     display pages
+2.  in functional componment no used used render
+//////////////////////functional compoment////////////
+export default function Profile(props){
+     const red=()=>{
+        alert("red called")
+     }
+     return <div>
+        <h1 onClick={red} >{props.text}</h1>
+     </div>
+     /////////////////////////////////////////JSX///////////////////////////////
+     JSX (javascript xml)=allow the html in javascript (in bulid})
+//////////////////////////props////////////////
+it is used transfer data any from dyaminclly or satictis
+using functioncompoment
+import React from 'react';
+
+
+
+export default function  Profile(props)
+{
+    return(
+        <div>
+            <h1>   {props.text}
+            </h1>
+        </div>
+    )
+}
+/////////////////////////////state/////////////
+state class ka internal object hota ha or ya private hota 
+state ek object hota but work variable jasa karta ha
+we are assign the value that uesr any time and situation
+
+
+////////////////////////////////////////////////////// event handling in both class and functional compponent//////////////
+import React from 'react';
+
+/*
+export default class Profile extends React.Component{
+         handleClick = () => {
+    alert("Hi there, user!");
+  };
+
+  render() {
+    return (
+      <div onClick={this.handleClick()}>
+                <p>Click this text to see the event bubbling</p> 
+             {" "}
+        <button onClick={()=>this.handleClick()}>Click me</button>   
+         {" "}
+      </div>
+    );
+  }
+  }
+  */
+
+export default class Profile extends React.Component{
+    handleClick = () => {
+    console.log("Hi there, user!");
+  };
+
+  render() {
+    return (
+      <div onClick={this.handleClick()}>
+                <p>Click this text to see the event bubbling</p> 
+             {" "}
+        <button onClick={this.handleClick()}>Click me</button>   
+         {" "}
+      </div>
+    );
+  }
+}
+////////////////////////life cycle method 
+ it is full  proces of compoment creating and deleting 
+ phase   3 tpye  1 Mounting 2 Updating 3. Unmounting
+ 1 Mounting vich constractor  then dom  componmentDidMount 
+ 2 udating the render the  componmentDidupdate
+ 3   same but componmenwillmount
+ /////////////////componmentDidMount//////////////
+ used to API called and html in API
+ 
+import React from 'react';
+
+class App extends React.Component{
+
+    constructor(){
+        super();
+        
+        console.log("constr")
+    }
+componentDidMount(){
+  console.log("componentdid")
+}
+   
+      render()
+      {
+console.log('render');
+
+
+         return(
+            <div>
+                
+                  <h1> hello</h1>
+                
+                
+            </div>
+         )
+       }
+}
+
+
+export default App;
+///////////////////componmentDidupdate///////////
