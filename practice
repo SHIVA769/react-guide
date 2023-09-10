@@ -1,1 +1,320 @@
-more pratice
+////////////////////////////////// ------------REACT NOTES---------------/////////////////////////////////////////
+ REACT is  javascript  libaray  for building user interface .it maintained by facebook and it play with virtual dom
+ it only used in fronted not backend it use API. REACT has componment based archieture application
+  1 Type of componment
+   .functional
+   .. classa
+
+ /////////////////////////////////////// componment///////////////////////////////////
+  1. class OR Statefull componment are same  because class componment vich he state use kar sakda ha
+  when to use them :=functional componment used modifiy the pages bur class componment are use only 
+     display pages
+2.  in functional componment no used used render
+//////////////////////functional compoment////////////
+export default function Profile(props){
+     const red=()=>{
+        alert("red called")
+     }
+     return <div>
+        <h1 onClick={red} >{props.text}</h1>
+     </div>
+     /////////////////////////////////////////JSX///////////////////////////////
+     JSX (javascript xml)=allow the html in javascript (in bulid})
+//////////////////////////props////////////////
+it is used transfer data any from dyaminclly or satictis
+using functioncompoment
+import React from 'react';
+
+
+
+export default function  Profile(props)
+{
+    return(
+        <div>
+            <h1>   {props.text}
+            </h1>
+        </div>
+    )
+}
+/////////////////////////////state/////////////
+state class ka internal object hota ha or ya private hota 
+state ek object hota but work variable jasa karta ha
+we are assign the value that uesr any time and situation
+
+
+////////////////////////////////////////////////////// event handling in both class and functional compponent//////////////
+import React from 'react';
+
+/*
+export default class Profile extends React.Component{
+         handleClick = () => {
+    alert("Hi there, user!");
+  };
+
+  render() {
+    return (
+      <div onClick={this.handleClick()}>
+                <p>Click this text to see the event bubbling</p> 
+             {" "}
+        <button onClick={()=>this.handleClick()}>Click me</button>   
+         {" "}
+      </div>
+    );
+  }
+  }
+  */
+
+export default class Profile extends React.Component{
+    handleClick = () => {
+    console.log("Hi there, user!");
+  };
+
+  render() {
+    return (
+      <div onClick={this.handleClick()}>
+                <p>Click this text to see the event bubbling</p> 
+             {" "}
+        <button onClick={this.handleClick()}>Click me</button>   
+         {" "}
+      </div>
+    );
+  }
+}
+////////////////////////life cycle method 
+ it is full  proces of compoment creating and deleting 
+ phase   3 tpye  1 Mounting 2 Updating 3. Unmounting
+ 1 Mounting vich constractor  then dom  componmentDidMount 
+ 2 udating the render the  componmentDidupdate
+ 3   same but componmenwillmount
+ /////////////////componmentDidMount//////////////
+ used to API called and html in API
+ 
+import React from 'react';
+
+class App extends React.Component{
+
+    constructor(){
+        super();
+        
+        console.log("constr")
+    }
+componentDidMount(){
+  console.log("componentdid")
+}
+   
+      render()
+      {
+console.log('render');
+
+
+         return(
+            <div>
+                
+                  <h1> hello</h1>
+                
+                
+            </div>
+         )
+       }
+}
+
+
+export default App;
+///////////////////componmentDidupdate///////////
+
+/////////////////////HOOKS //////////////////
+MORE TIME WE ARE NOT UES STATE IN functioncompoment SO WE USED THE HOOKS
+import React, { useState } from 'react';
+
+function App() {
+  // Declare a new state variable, which we'll call "count"
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count - 1)}>
+        Click me
+      </button>
+    </div>
+  );
+}
+
+export default App
+///////////////////useffect /////////////
+we are not used many work in functioncompoment so we need to resolved with lifr cycle and HOOKS
+ useffect are replacement for componentDidMount,componmentDidupdate componmenwillmount so it  save the time and clean code
+
+ ///////////from handeling///////////////////
+ import React from "react";
+export default class From extends React.Component{
+ constructor(){
+    super()
+    this.state={
+    user:null,
+    pasword:null
+    }
+ }
+ submit(){
+    console.log(this.state)
+ }
+ render()
+ {
+    return(
+    <div>
+    <h1> from Handeling</h1>
+    <input type="text" 
+    name="user" 
+    onChange={(e)=>{this.setState({user:e.target.value})}}
+     />
+    <br></br>
+     <input type="password" name="password"
+     onChange={(e)=>{this.setState({user:e.target.value})}}
+       />
+    <br></br>
+    <button onClick={()=>this.submit()}> submit</button>
+    </div>  
+    )
+    
+
+ }
+
+}
+////////////////////from valiDING
+import React from "react";
+ export default   class Test extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      fields: {},
+      errors: {},
+    };
+  }
+
+  handleValidation() {
+    let fields = this.state.fields;
+    let errors = {};
+    let formIsValid = true;
+
+    //Name
+    if (!fields["name"]) {
+      formIsValid = false;
+      errors["name"] = "Cannot be empty";
+    }
+
+    if (typeof fields["name"] !== "undefined") {
+      if (!fields["name"].match(/^[a-zA-Z]+$/)) {
+        formIsValid = false;
+        errors["name"] = "Only letters";
+      }
+    }
+
+    //Email
+    if (!fields["email"]) {
+      formIsValid = false;
+      errors["email"] = "Cannot be empty";
+    }
+
+    if (typeof fields["email"] !== "undefined") {
+      let lastAtPos = fields["email"].lastIndexOf("@");
+      let lastDotPos = fields["email"].lastIndexOf(".");
+
+      if (
+        !(
+          lastAtPos < lastDotPos &&
+          lastAtPos > 0 &&
+          fields["email"].indexOf("@@") -1 &&
+          lastDotPos > 2 &&
+          fields["email"].length - lastDotPos > 2
+        )
+      ) {
+        formIsValid = false;
+        errors["email"] = "Email is not valid";
+      }
+    }
+
+    this.setState({ errors: errors });
+    return formIsValid;
+  }
+
+  contactSubmit(e) {
+    e.preventDefault();
+
+    if (this.handleValidation()) {
+      alert("Form submitted");
+    } else {
+      alert("Form has errors.");
+    }
+  }
+
+  handleChange(field, e) {
+    let fields = this.state.fields;
+    fields[field] = e.target.value;
+    this.setState({ fields });
+  }
+
+  render() {
+    return (
+      <div>
+        <form
+          name="contactform"
+          className="contactform"
+          onSubmit={this.contactSubmit.bind(this)}
+        >
+          <div className="col-md-6">
+            <fieldset>
+              <input
+                ref="name"
+                type="text"
+                size="30"
+                placeholder="Name"
+                onChange={this.handleChange.bind(this, "name")}
+                value={this.state.fields["name"]}
+              />
+              <span style={{ color: "red" }}>{this.state.errors["name"]}</span>
+              <br />
+              <input
+                refs="email"
+                type="text"
+                size="30"
+                placeholder="Email"
+                onChange={this.handleChange.bind(this, "email")}
+                value={this.state.fields["email"]}
+              />
+              <span style={{ color: "red" }}>{this.state.errors["email"]}</span>
+              <br />
+              <input
+                refs="phone"
+                type="text"
+                size="30"
+                placeholder="Phone"
+                onChange={this.handleChange.bind(this, "phone")}
+                value={this.state.fields["phone"]}
+              />
+              <br />
+              <input
+                refs="address"
+                    type="text"
+                size="30"
+                placeholder="Address"
+                onChange={this.handleChange.bind(this, "address")}
+                value={this.state.fields["address"]}
+              />
+              <br />
+            </fieldset>
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
+
+React.render(<Test />, document.getElementById("container"));
+//////////////////////// style in react
+used = Global style 
+       Inline style 
+       conditoinal style
+//////////////routing
+routing means the  path dena
+
